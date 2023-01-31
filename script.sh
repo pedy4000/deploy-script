@@ -77,10 +77,10 @@ parse_params() {
       user="${2-}"
       shift
       ;;
-    -?*) die "Unknown option: $1" ;;
+    ?*) die "Unknown option: $1" ;;
     *) break ;;
     esac
-    shift
+    [[ ! $# -eq 0 ]] && shift
   done
   echo "$@"
   args=("$@")
