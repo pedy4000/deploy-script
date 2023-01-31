@@ -102,3 +102,11 @@ then
 else
     die "$service_path/$service_name doesn't exist"
 fi
+
+if [ ! -d "$service_path/$service_name/secrests/dev/" ] 
+then
+    mkdir --parents "$service_path/$service_name/secrests/dev/"
+    chown -r docker:users "$service_path/$service_name/secrests/dev/"
+    chmod -r 0750 "$service_path/$service_name/secrests/dev/"
+fi
+    
