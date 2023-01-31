@@ -43,6 +43,7 @@ die() {
 parse_params() {
   # default values of variables set from params
   service_name=''
+  service_remote_name=''
   service_branch_name=''
   service_path=''
   service_git_url=''
@@ -52,6 +53,10 @@ parse_params() {
     -h | --help) usage ;;
     --service_name)
       service_name="${2-}"
+      shift
+      ;;
+	--service_remote_name)
+      service_remote_name="${2-}"
       shift
       ;;
 	--service_branch_name)
@@ -77,6 +82,7 @@ parse_params() {
   # check required params and arguments
   msg "dd ${service_path}"
   [[ -z "${service_name-}" ]] && die "Missing required parameter: service_name"
+  [[ -z "${service_remote_name-}" ]] && die "Missing required parameter: service_remote_name"
   [[ -z "${service_branch_name-}" ]] && die "Missing required parameter: service_branch_name"
   [[ -z "${service_path-}" ]] && die "Missing required parameter: service_path"
   [[ -z "${service_git_url-}" ]] && die "Missing required parameter: service_git_url"
@@ -92,7 +98,7 @@ setup_colors
 if [ -d "$service_path/$service_name" ] 
 then
     cd $service_path/$service_name
-	git pull $service_branch_name --force
+	git pull $service_remote_name $service_branch_name --force
 else
     cd $service_path
 	git clone $service_git_url
