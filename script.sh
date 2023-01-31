@@ -75,7 +75,7 @@ parse_params() {
   args=("$@")
 
   # check required params and arguments
-  msg "dd {$service_path}"
+  msg "dd ${service_path}"
   [[ -z "${service_name-}" ]] && die "Missing required parameter: service_name"
   [[ -z "${service_branch_name-}" ]] && die "Missing required parameter: service_branch_name"
   [[ -z "${service_path-}" ]] && die "Missing required parameter: service_path"
