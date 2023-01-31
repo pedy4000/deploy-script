@@ -98,8 +98,7 @@ setup_colors
 if [ -d "$service_path/$service_name" ] 
 then
     cd $service_path/$service_name
-	git pull $service_remote_name $service_branch_name --force
+    git pull $service_remote_name $service_branch_name --force
 else
-    cd $service_path
-	git clone $service_git_url
+    die "$service_path/$service_name doesn't exist"
 fi
