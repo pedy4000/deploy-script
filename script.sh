@@ -105,10 +105,10 @@ fi
 
 if [ ! -d "$service_path/$service_name/secrests/dev/" ] 
 then
-    mkdir --parents "$service_path/$service_name/secrests/dev/"
+    mkdir --parents "$service_path/$service_name/secrets/dev/"
     ls /home/dockeru/django-jewelry-shop/secrets -lash
-    chown -R docker:users "$service_path/$service_name/secrests/*"
-    chmod -R 0750 "$service_path/$service_name/secrests/*"
+    chown -R docker:users "$service_path/$service_name/secrets/*"
+    chmod -R 0750 "$service_path/$service_name/secrets/*"
     ls /home/dockeru/django-jewelry-shop/secrets -lash
 fi
     
