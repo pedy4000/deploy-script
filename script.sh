@@ -100,10 +100,10 @@ parse_params() {
 parse_params "$@"
 setup_colors
 
-# script logic here
-
+# Update local repo on target server
 if [ -d "$service_path/$service_name" ] 
 then
+    msg "Pulling service repo"
     cd $service_path/$service_name
     git checkout $service_branch_name
     git pull $service_remote_name $service_branch_name --force
@@ -111,12 +111,16 @@ else
     die "$service_path/$service_name doesn't exist"
 fi
 
+# Create secrets directory
 if [ ! -d "$service_path/$service_name/secrests/dev/" ] 
 then
+    msg "Creating secrets directory"
     mkdir --parents "$service_path/$service_name/secrets/dev/"
-    ls /home/dockeru/django-jewelry-shop/secrets -lash
     sudo chown -R $user:users "$service_path/$service_name/secrets/"
     sudo chmod -R 0750 "$service_path/$service_name/secrets/"
-    ls /home/dockeru/django-jewelry-shop/secrets -lash
+else
+    msg "Secrets directory exist"
 fi
-    
+
+
+
