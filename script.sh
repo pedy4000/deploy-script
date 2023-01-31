@@ -47,6 +47,8 @@ parse_params() {
   service_branch_name=''
   service_path=''
   service_git_url=''
+  
+  user=""
 
   while :; do
     case "${1-}" in
@@ -55,20 +57,24 @@ parse_params() {
       service_name="${2-}"
       shift
       ;;
-	--service_remote_name)
+    --service_remote_name)
       service_remote_name="${2-}"
       shift
       ;;
-	--service_branch_name)
+    --service_branch_name)
       service_branch_name="${2-}"
       shift
       ;;
-	--service_path)
+    --service_path)
       service_path="${2-}"
       shift
       ;;
-	--service_git_url)
+    --service_git_url)
       service_git_url="${2-}"
+      shift
+      ;;
+    --user)
+      user="${2-}"
       shift
       ;;
     -?*) die "Unknown option: $1" ;;
@@ -85,6 +91,8 @@ parse_params() {
   [[ -z "${service_branch_name-}" ]] && die "Missing required parameter: service_branch_name"
   [[ -z "${service_path-}" ]] && die "Missing required parameter: service_path"
   [[ -z "${service_git_url-}" ]] && die "Missing required parameter: service_git_url"
+  
+  [[ -z "${user-}" ]] && die "Missing required parameter: user"
 
   return 0
 }
@@ -107,7 +115,7 @@ if [ ! -d "$service_path/$service_name/secrests/dev/" ]
 then
     mkdir --parents "$service_path/$service_name/secrets/dev/"
     ls /home/dockeru/django-jewelry-shop/secrets -lash
-    chown -R docker:users "$service_path/$service_name/secrets/*"
+    chown -R $user:users "$service_path/$service_name/secrets/*"
     chmod -R 0750 "$service_path/$service_name/secrets/*"
     ls /home/dockeru/django-jewelry-shop/secrets -lash
 fi
