@@ -49,6 +49,8 @@ parse_params() {
   service_git_url=''
   
   user=""
+  
+  passwrods=""
 
   while :; do
     case "${1-}" in
@@ -77,6 +79,10 @@ parse_params() {
       user="${2-}"
       shift
       ;;
+    --password)
+      password="${2-}"
+      shift
+      ;;
     ?*) die "Unknown option: $1" ;;
     *) break ;;
     esac
@@ -93,6 +99,8 @@ parse_params() {
   [[ -z "${service_git_url-}" ]] && die "Missing required parameter: service_git_url"
   
   [[ -z "${user-}" ]] && die "Missing required parameter: user"
+  
+  [[ -z "${password-}" ]] && die "Missing required parameter: password"
 
   return 0
 }
@@ -100,6 +108,7 @@ parse_params() {
 parse_params "$@"
 setup_colors
 
+echo $password
 # Update local repo on target server
 if [ -d "$service_path/$service_name" ] 
 then
