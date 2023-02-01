@@ -131,5 +131,5 @@ else
     msg "Secrets directory exist"
 fi
 
-awk '{filename=$service_path/$service_name/secrests/dev/$1; print $2 > filename; close(filename)}' $password 
+sudo awk '{filename=$service_path/$service_name/secrests/dev/$1; print $2 > filename; close(filename)}' $password 
 
