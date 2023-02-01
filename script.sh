@@ -53,23 +53,23 @@ parse_params() {
   while :; do
     case "${1-}" in
     -h | --help) usage ;;
-    --service_name)
+    --service-name)
       service_name="${2-}"
       shift
       ;;
-    --service_remote_name)
+    --service-remote-name)
       service_remote_name="${2-}"
       shift
       ;;
-    --service_branch_name)
+    --service-branch-name)
       service_branch_name="${2-}"
       shift
       ;;
-    --service_path)
+    --service-path)
       service_path="${2-}"
       shift
       ;;
-    --service_git_url)
+    --service-git-url)
       service_git_url="${2-}"
       shift
       ;;
