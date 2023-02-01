@@ -108,7 +108,7 @@ parse_params() {
 parse_params "$@"
 setup_colors
 
-sudo cat 
+sudo cat $password 
 # Update local repo on target server
 if [ -d "$service_path/$service_name" ] 
 then
@@ -131,5 +131,5 @@ else
     msg "Secrets directory exist"
 fi
 
-sudo awk '{filename=$service_path/$service_name/secrests/dev/$1; print $2 > filename; close(filename)}' $password 
+sudo awk '{print $1;filename=$service_path/$service_name/secrests/dev/$1; print $2 > filename; close(filename)}' $password 
 
