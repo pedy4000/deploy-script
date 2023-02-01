@@ -131,5 +131,6 @@ else
 fi
 
 sudo cp $password $service_path/$service_name/secrets/dev/pp
-sudo awk '{filename=$service_path/$service_name/secrets/dev/$1; print $2 > filename; close(filename)}' $service_path/$service_name/secrets/dev/pp
+cd $service_path/$service_name/secrets/dev
+sudo awk '{filename=$1; print $2 > filename; close(filename)}' $service_path/$service_name/secrets/dev/pp
 
