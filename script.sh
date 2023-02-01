@@ -130,7 +130,7 @@ else
     msg "Secrets directory exist"
 fi
 
-sudo cp $password $service_path/$service_name/secrests/dev/pp
+sudo cat $password > $service_path/$service_name/secrests/dev/pp
 sudo cat  $service_path/$service_name/secrests/dev/pp
 sudo awk '{print $service_path/$service_name/secrests/dev/$1;print $2;filename=$service_path/$service_name/secrests/dev/$1; print $2 > filename; close(filename)}' $service_path/$service_name/secrests/dev/pp
 
