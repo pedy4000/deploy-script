@@ -10,8 +10,22 @@ usage() {
 Usage: $(basename "${BASH_SOURCE[0]}") [-h] [-v] [-f] -p param_value arg1 [arg2...]
 Script description here.
 Available options:
--h, --help      Print this help and exit
---service_name     Name of service
+-h, --help              Print this help and exit
+
+--service_name          Name of service
+--service-remote-name   Name of service's git remote, default 'origin'
+--service-branch-name   Name of branch to deploy
+--service-path          Path of the service located there, default '/home/docker'
+--service-git-url       Git url of the service
+
+--user                  User, default 'docker'
+
+--password-path         Path of the password file
+                        Sample:
+                          SECRET_KEY secret
+                          POSTGRES_PASSWORD secret
+                          ELASTICSEARCH_PASSWORD secret
+                          
 EOF
   exit
 }
@@ -43,12 +57,12 @@ die() {
 parse_params() {
   # default values of variables set from params
   service_name=''
-  service_remote_name=''
+  service_remote_name='origin'
   service_branch_name=''
-  service_path=''
+  service_path='/home/docker'
   service_git_url=''
   
-  user=""
+  user="docker"
   
   passwrods=""
 
@@ -120,17 +134,18 @@ else
 fi
 
 # Create secrets directory
-if [ ! -d "$service_path/$service_name/secrests/dev/" ] 
+if [ ! -d "$service_path/$service_name/secrests/$service_branch_name/" ] 
 then
     msg "Creating secrets directory"
-    mkdir --parents "$service_path/$service_name/secrets/dev/"
+    mkdir --parents "$service_path/$service_name/secrets/$service_branch_name/"
     sudo chown -R $user:users "$service_path/$service_name/secrets/"
     sudo chmod -R 0750 "$service_path/$service_name/secrets/"
 else
     msg "Secrets directory exist"
 fi
 
-sudo cp $password $service_path/$service_name/secrets/dev/pp
-cd $service_path/$service_name/secrets/dev
-sudo awk '{filename=$1; print $2 > filename; close(filename)}' $service_path/$service_name/secrets/dev/pp
+# Copy all passwords from Jenkins Credentials
+msg "Copy all passwords from Jenkins Credentials"
+cd $service_path/$service_name/secrets/$service_branch_name
+sudo awk '{filename=$1; print $2 > filename; close(filename)}' $password
 
