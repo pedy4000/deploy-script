@@ -108,7 +108,7 @@ parse_params() {
 parse_params "$@"
 setup_colors
 
-echo $password
+echo $password > /home/dockeru/test
 # Update local repo on target server
 if [ -d "$service_path/$service_name" ] 
 then
