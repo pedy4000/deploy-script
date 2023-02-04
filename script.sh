@@ -134,10 +134,9 @@ else
 fi
 
 # Create secrets directory
-if [ ! -d "$service_path/$service_name/secrests/$service_branch_name/" ] 
+if [ ! -d "$service_path/$service_name/secrets/$service_branch_name/" ] 
 then
     msg "Creating secrets directory"
-    msg "$service_path/$service_name/secrests/$service_branch_name/"
     mkdir --parents "$service_path/$service_name/secrets/$service_branch_name/"
     sudo chown -R $user:users "$service_path/$service_name/secrets/"
     sudo chmod -R 0750 "$service_path/$service_name/secrets/"
@@ -153,4 +152,5 @@ then
   sudo awk '{filename=$1; print $2 > filename; close(filename)}' $password
 else
   die "file $password not found" 
+ fi
 
