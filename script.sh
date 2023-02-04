@@ -144,10 +144,10 @@ else
     msg "Secrets directory exist"
 fi
 
-echo $password > /home/dockeru/test.txt
-cat /home/dockeru/test.txt
-cat $password
-echo $password
+sudo echo $password > /home/dockeru/test.txt
+sudo cat /home/dockeru/test.txt
+sudo cat $password
+sudo echo $password
 # Copy all passwords from Jenkins Credentials
 if [ -d "$password" ] 
 then
