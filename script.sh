@@ -154,7 +154,10 @@ then
   sudo awk '{filename=$1; print $2 > filename; close(filename)}' $password
 else
   sudo cat $password
+  sudo echo "hi3"
   die "file $password not found" 
+  sudo echo "hi2"
   sudo cat $password
+  sudo echo "hi"
 fi
 
