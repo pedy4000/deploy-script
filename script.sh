@@ -144,8 +144,6 @@ else
     msg "Secrets directory exist"
 fi
 
-sudo echo $password > /home/dockeru/test.txt
-sudo cat $password
 # Copy all passwords from Jenkins Credentials
 if [ -d "$password" ] 
 then
@@ -153,11 +151,6 @@ then
   cd $service_path/$service_name/secrets/$service_branch_name
   sudo awk '{filename=$1; print $2 > filename; close(filename)}' $password
 else
-  sudo cat $password
-  sudo echo "hi3"
   die "file $password not found" 
-  sudo echo "hi2"
-  sudo cat $password
-  sudo echo "hi"
 fi
 
