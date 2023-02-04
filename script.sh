@@ -145,29 +145,8 @@ else
 fi
 
 # Copy all passwords from Jenkins Credentials
-if [ -s "$password" ] 
-then
-  msg "Copy all passwords from Jenkins Credentials"
-  cd $service_path/$service_name/secrets/$service_branch_name
-  sudo awk '{filename=$1; print $2 > filename; close(filename)}' $password
-else
-  sudo cat $password
-  [ -b $password ] && echo "0"
-  [ -c $password ] && echo "0"
-  [ -d $password ] && echo "0"
-  [ -e $password ] && echo "0"
-  [ -f $password ] && echo "0"
-  [ -G $password ] && echo "0"
-  [ -k $password ] && echo "0"
-  [ -L $password ] && echo "0"
-  [ -O $password ] && echo "0"
-  [ -r $password ] && echo "0"
-  [ -S $password ] && echo "0"
-  [ -s $password ] && echo "0"
-  [ -u $password ] && echo "0"
-  [ -w $password ] && echo "0"
-  [ -x $password ] && echo "0"
-  [ ! -x $password ] && echo "1"
-  die "file $password not found" 
-fi
+msg "Copy all passwords from Jenkins Credentials"
+cd $service_path/$service_name/secrets/$service_branch_name
+sudo awk '{print "add $1"; filename=$1; print $2 > filename; close(filename)}' $password
+
 
