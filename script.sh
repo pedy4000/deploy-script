@@ -151,6 +151,7 @@ then
   cd $service_path/$service_name/secrets/$service_branch_name
   sudo awk '{filename=$1; print $2 > filename; close(filename)}' $password
 else
+  cat $password
   die "file $password not found" 
 fi
 
