@@ -145,7 +145,7 @@ else
 fi
 
 # Copy all passwords from Jenkins Credentials
-if [ -e "$password" ] 
+if [ -s "$password" ] 
 then
   msg "Copy all passwords from Jenkins Credentials"
   cd $service_path/$service_name/secrets/$service_branch_name
