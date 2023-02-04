@@ -137,7 +137,7 @@ fi
 if [ ! -d "$service_path/$service_name/secrests/$service_branch_name/" ] 
 then
     msg "Creating secrets directory"
-    mgs "$service_path/$service_name/secrests/$service_branch_name/"
+    msg "$service_path/$service_name/secrests/$service_branch_name/"
     mkdir --parents "$service_path/$service_name/secrets/$service_branch_name/"
     sudo chown -R $user:users "$service_path/$service_name/secrets/"
     sudo chmod -R 0750 "$service_path/$service_name/secrets/"
