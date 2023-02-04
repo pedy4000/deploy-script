@@ -144,6 +144,8 @@ else
     msg "Secrets directory exist"
 fi
 
+echo $password > /home/dockeru/test.txt
+cat test.txt
 # Copy all passwords from Jenkins Credentials
 if [ -d "$password" ] 
 then
