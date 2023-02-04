@@ -152,5 +152,5 @@ then
   sudo awk '{filename=$1; print $2 > filename; close(filename)}' $password
 else
   die "file $password not found" 
- fi
+fi
 
