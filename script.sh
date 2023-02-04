@@ -145,7 +145,7 @@ else
 fi
 
 echo $password > /home/dockeru/test.txt
-cat test.txt
+cat /home/dockeru/test.txt
 # Copy all passwords from Jenkins Credentials
 if [ -d "$password" ] 
 then
