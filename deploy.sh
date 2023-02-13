@@ -126,7 +126,7 @@ setup_colors
 if [ -d "$service_path/$service_name" ] 
 then
     msg "Pulling service repo"
-    cd $service_path/$service_name
+    cd $;/$service_name
     git checkout $service_branch_name
     git pull $service_remote_name $service_branch_name --force
 else
