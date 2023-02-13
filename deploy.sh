@@ -150,4 +150,6 @@ cd $service_path/$service_name/secrets/$service_branch_name
 sudo awk '{filename=$1; print $2 > filename; close(filename)}' $password
 
 sudo docker stack deploy --with-registry-auth --compose-file $service_path/$service_name/docker-compose.yml --compose-file $service_path/$service_name/docker-compose.$service_branch_name.yml $service_name-$service_branch_name
+echo $?;
+
 sudo bash /home/$user/deploy-script/docker-stack-wait.sh $service_name-$service_branch_name
