@@ -127,8 +127,8 @@ if [ -d "$service_path/$service_name" ]
 then
     msg "Pulling service repo"
     cd $service_path/$service_name
-    git pull $service_remote_name $service_branch_name --force
     git checkout $service_branch_name
+    git pull $service_remote_name $service_branch_name --force
 else
     die "$service_path/$service_name doesn't exist"
 fi
