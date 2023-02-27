@@ -91,7 +91,7 @@ parse_params() {
       service_git_url="${2-}"
       shift
       ;;
-    --commit-hash
+    --commit-hash)
       commit_hash="${2-}"
       shift
       ;;
