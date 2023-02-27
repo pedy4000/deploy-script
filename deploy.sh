@@ -146,8 +146,8 @@ if [ ! -d "$service_path/$service_name/secrets/$service_branch_name/" ]
 then
     msg "Creating secrets directory"
     mkdir --parents "$service_path/$service_name/secrets/$service_branch_name/"
-    sudo chown -R $user:users "$service_path/$service_name/secrets/"
-    sudo chmod -R 0750 "$service_path/$service_name/secrets/"
+    chown -R $user:users "$service_path/$service_name/secrets/"
+    chmod -R 0750 "$service_path/$service_name/secrets/"
 else
     msg "Secrets directory exist"
 fi
@@ -158,13 +158,13 @@ cd $service_path/$service_name/secrets/$service_branch_name
 sudo awk '{filename=$1; print $2 > filename; close(filename)}' $password
 
 # Deploy stack
-sudo docker stack deploy --with-registry-auth --compose-file $service_path/$service_name/docker-compose.yml --compose-file $service_path/$service_name/docker-compose.$service_branch_name.yml $service_name-$service_branch_name
+docker stack deploy --with-registry-auth --compose-file $service_path/$service_name/docker-compose.yml --compose-file $service_path/$service_name/docker-compose.$service_branch_name.yml $service_name-$service_branch_name
 
 # Docker stack wait
-sudo bash /home/$user/deploy-script/docker-stack-wait.sh $service_name-$service_branch_name
+bash /home/$user/deploy-script/docker-stack-wait.sh $service_name-$service_branch_name
 
 # Check commit hash
-containers_commit_hash=$(sudo docker ps --filter "name=$service_name-$service_branch_name" --format='{{ .Names }}' | xargs docker inspect --format='{{ index .Config.Labels "ir.myket.commit" }}')
+containers_commit_hash=$(docker ps --filter "name=$service_name-$service_branch_name" --format='{{ .Names }}' | xargs docker inspect --format='{{ index .Config.Labels "ir.myket.commit" }}')
 
 for hash in $containers_commit_hash; do
   if [ "$hash" != "$commit_hash" ]; then
