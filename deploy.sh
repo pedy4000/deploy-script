@@ -153,5 +153,5 @@ sudo docker stack deploy --with-registry-auth --compose-file $service_path/$serv
 
 sudo bash /home/$user/deploy-script/docker-stack-wait.sh $service_name-$service_branch_name
 
-commit_hash=sudo docker ps --filter "name=$service_name-$service_branch_name_web" --format='{{ .Names }}' | xargs docker inspect --format='{{ index .Config.Labels "ir.myket.commit" }}'
+commit_hash=sudo docker ps --filter "name=$service_name-$service_branch_name" --format='{{ .Names }}' | xargs docker inspect --format='{{ index .Config.Labels "ir.myket.commit" }}'
 echo $commit_hash
