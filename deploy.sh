@@ -62,6 +62,8 @@ parse_params() {
   service_path='/home/docker'
   service_git_url=''
   
+  commit_hash=''
+  
   user="docker"
   
   passwrods=""
@@ -89,6 +91,10 @@ parse_params() {
       service_git_url="${2-}"
       shift
       ;;
+    --commit-hash
+      commit_hash="${2-}"
+      shift
+      ;;
     --user)
       user="${2-}"
       shift
@@ -106,11 +112,13 @@ parse_params() {
   args=("$@")
 
   # check required params and arguments
-  [[ -z "${service_name-}" ]] && die "Missing required parameter: service_name"
-  [[ -z "${service_remote_name-}" ]] && die "Missing required parameter: service_remote_name"
-  [[ -z "${service_branch_name-}" ]] && die "Missing required parameter: service_branch_name"
-  [[ -z "${service_path-}" ]] && die "Missing required parameter: service_path"
-  [[ -z "${service_git_url-}" ]] && die "Missing required parameter: service_git_url"
+  [[ -z "${service_name-}" ]] && die "Missing required parameter: service-name"
+  [[ -z "${service_remote_name-}" ]] && die "Missing required parameter: servic-remote-name"
+  [[ -z "${service_branch_name-}" ]] && die "Missing required parameter: service-branch-name"
+  [[ -z "${service_path-}" ]] && die "Missing required parameter: service-path"
+  [[ -z "${service_git_url-}" ]] && die "Missing required parameter: service-git-url"
+  
+  [[ -z "${commit_hash-}" ]] && die "Missing required parameter: commit-hash"
   
   [[ -z "${user-}" ]] && die "Missing required parameter: user"
   
@@ -149,9 +157,17 @@ msg "Copy all passwords from Jenkins Credentials"
 cd $service_path/$service_name/secrets/$service_branch_name
 sudo awk '{filename=$1; print $2 > filename; close(filename)}' $password
 
+# Deploy stack
 sudo docker stack deploy --with-registry-auth --compose-file $service_path/$service_name/docker-compose.yml --compose-file $service_path/$service_name/docker-compose.$service_branch_name.yml $service_name-$service_branch_name
 
+# Docker stack wait
 sudo bash /home/$user/deploy-script/docker-stack-wait.sh $service_name-$service_branch_name
 
-commit_hash=$(sudo docker ps --filter "name=$service_name-$service_branch_name" --format='{{ .Names }}' | sudo xargs docker inspect --format='{{ index .Config.Labels "ir.myket.commit" }}')
-echo $commit_hash
+# Check commit hash
+containers_commit_hash=$(sudo docker ps --filter "name=$service_name-$service_branch_name" --format='{{ .Names }}' | xargs docker inspect --format='{{ index .Config.Labels "ir.myket.commit" }}')
+echo $containers_commit_hash
+for hash in $containers_commit_hash; do
+  if [ "$hash" != "$commit_hash" ]; then
+    die "Not all commit_hash are equal to $commit_hash"
+  fi
+done
