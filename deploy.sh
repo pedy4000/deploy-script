@@ -165,7 +165,7 @@ sudo bash /home/$user/deploy-script/docker-stack-wait.sh $service_name-$service_
 
 # Check commit hash
 containers_commit_hash=$(sudo docker ps --filter "name=$service_name-$service_branch_name" --format='{{ .Names }}' | xargs docker inspect --format='{{ index .Config.Labels "ir.myket.commit" }}')
-echo $containers_commit_hash
+
 for hash in $containers_commit_hash; do
   if [ "$hash" != "$commit_hash" ]; then
     die "Not all commit_hash are equal to $commit_hash"
