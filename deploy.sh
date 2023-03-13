@@ -153,6 +153,7 @@ then
 else
     msg "Secrets directory exist"
 fi
+echo $password;
 
 # Copy all passwords from Jenkins Credentials
 msg "Copy all passwords from Jenkins Credentials"
