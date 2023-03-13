@@ -159,7 +159,7 @@ echo $password;
 msg "Copy all passwords from Jenkins Credentials"
 cd $service_path/$service_name/secrets/$service_branch_name
 
-cat $password | awk '{filename=$1; print $2 > filename; close(filename)}' 
+echo $password | awk '{filename=$1; print $2 > filename; close(filename)}' 
 
 # Deploy stack
 docker stack deploy --with-registry-auth --compose-file $service_path/$service_name/docker-compose.yml --compose-file $service_path/$service_name/docker-compose.$service_branch_name.yml $service_name-$service_branch_name
