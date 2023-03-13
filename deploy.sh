@@ -157,6 +157,8 @@ fi
 # Copy all passwords from Jenkins Credentials
 msg "Copy all passwords from Jenkins Credentials"
 cd $service_path/$service_name/secrets/$service_branch_name
+echo $password
+cat $password
 awk '{filename=$1; print $2 > filename; close(filename)}' $password
 
 # Deploy stack
