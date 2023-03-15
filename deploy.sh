@@ -21,12 +21,6 @@ Available options:
 --commit-hash           Hash of last commit
 
 --user                  User, default 'docker'
-
---password-path         Path of the password file
-                        Sample:
-                          SECRET_KEY secret
-                          POSTGRES_PASSWORD secret
-                          ELASTICSEARCH_PASSWORD secret
                           
 EOF
   exit
@@ -67,8 +61,6 @@ parse_params() {
   commit_hash=''
   
   user="docker"
-  
-  passwrods=""
 
   while :; do
     case "${1-}" in
@@ -101,10 +93,6 @@ parse_params() {
       user="${2-}"
       shift
       ;;
-    --password)
-      password="${2-}"
-      shift
-      ;;
     ?*) die "Unknown option: $1" ;;
     *) break ;;
     esac
@@ -124,8 +112,6 @@ parse_params() {
   
   [[ -z "${user-}" ]] && die "Missing required parameter: user"
   
-  [[ -z "${password-}" ]] && die "Missing required parameter: password"
-
   return 0
 }
 
